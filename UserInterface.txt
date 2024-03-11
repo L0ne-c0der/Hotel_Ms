@@ -1,0 +1,137 @@
+--------------------- Welcome to Dream Hotel ------------------------
+Choose one of the given options:
+
+(1). Make a reservation                   (2). Manage reservation(s)
+(3). Hotel Details (rooms and amenities) (only if time permits)
+Choose your option:
+
+if 1:
+
+    Enter check-in date (from 12:00 PM):
+    Enter check-out date (till 12:00 PM): 
+
+    Guests and Rooms:
+
+    Enter the number of adults: 
+    Are there any children(below 18 years of age): Yes or No
+    if yes:
+        enter age of child i (1 to 17):
+
+    Types:
+    1. Single Room
+    2. Deluxe Room
+    3. Luxury Room (Free breakfast)
+    4. Luxury Suite (if time permits) (Free breakfast)
+    5. Presidential Suite (Free breakfast)
+    Enter the room type: 
+    Enter the number of rooms:
+
+    Special Options (provided based on avaialability, charges may or may not apply):
+    1. Breakfast
+    Bed preferences (not for single room):
+    2. King Bed
+    3. Queen Bed
+    4. Twin Beds
+    5. Room location preferences (only for Luxury or above)
+    6. Pets accomodation
+    7. Room on a higher floor (Deluxe and Luxury)
+    8. Airport Transfer (+860)
+
+    Payment:
+    User Details:
+    Booking for: 
+     Name: 
+     email :
+     phone number: +__ ________
+
+    Price:
+    n x {Room type}             {Adults} adults {Children} children
+    {Breakfast}
+
+    Basic Room Price                    n*{Price} 
+    Price after discounts               -(For children)
+    Taxes, service fees, GST            +{%20 0f Price}
+    Total Price                           Rs. ______
+
+    Please choose the payment method:
+
+    1. UPI/BHIM
+    2. Credit/Debit/ATM Card
+    3. EMI
+    4. Net Banking
+    5. Gift Cards & e-wallets
+    6. Google Pay
+    7. Go back home (exit)
+
+if 2:
+    1. Upcoming (for now we will go with this one)
+    2. Cancelled (for later)
+    3. Completed (for later)
+    4. Go back home
+    
+    A. 
+    Check-in: {Date}             Check-out: {Out_date}
+    n x {Room-type}              Total-price: {Price}
+    B. 
+    Check-in ....
+
+    Select one from the above reservations for more details: A
+    1) Change stay dates (additional charges may apply)
+    2) View complete invoice
+    3) Cancel Booking (free cancellations)
+    4) Go back to home
+    
+    if 1:
+        Enter new check-in date(anyday from tomorrow):
+        Enter new checkout date: 
+    if 2:
+        ---------------------TAX INVOICE-------------------------------
+        BOOKING ID:                             INVOICE NO.
+          NH70175307430776                       M06HL24I10262289              
+        DATE:                                   TRANSACTIONAL TYPE/CATEGORY:
+         12/02/2024                              REG/B2C   
+        DOCUMENT TYPE:                          TRANSACTION DETAIL:
+         Invoice                                   RG
+        PLACE OF SUPPLY 
+            Telangana
+        Dream Hotel HYDERABAD 
+         {Check-in} - {Check-out}
+        CUSTOMER NAME
+         {Name}
+        COMPANY NAME
+         {Name}
+        PAYMENT BREAKUP
+          *Accommodation charges
+          IGST @ 18%
+          Total Booking Amount                                  Rs. {Total Price}
+          Handling Charges                                      Rs. 5.00
+          Grand Total                                           Rs. {Final Price}
+____________________________________________________________________________________________________
+            This is a computer generated Invoice and does not require Signature/Stamp.
+____________________________________________________________________________________________________
+
+    GST credit charged by the hotel is only available against the invoice issued by the respective hotel.
+    If you are looking for the hotel GST invoice, please collect from the hotel.
+    Whether the tax is Payable on reverse charge basis: No
+    This is not a valid travel document
+
+    Invoice issued by Dream Hotel Pvt. Ltd.
+     PAN                                        HSN/SAC          SERVICE DESCRIPTION
+      AADCM5146R                                 998552           Reservation service for accommodation
+     GSTN                                       CIN
+      06AADCM5146R1ZZ                            U63040HR2000PTC090846
+
+    Dream Hotel Private Limited
+    19th Floor A,B,C tower, Epitome Building No-5,DLF
+    Cyber City Phase-III, Gurugram, Haryana, 122002
+    REGISTERED OFFICE
+    19th Floor, Epitome Building No. 5, DLF Cyber City, 
+    DLF Phase III,Gurugram-122002, Haryana
+
+    if 3:
+    You chose to cancel reservation booking: (A)
+    Please state your reason for canelling our booking:
+    ______
+    Please press 1 to confirm canellation and 2 to go back
+
+    Booking Cancelled
