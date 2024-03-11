@@ -21,7 +21,7 @@ class Room extends Guest{
     // Room(int choice, )
     void display(){
         System.out.println("1. Single Room ("+singleRooms+" available) ");
-        System.out.println("2. Double Room ("+deluxeRooms+" available) ");
+        System.out.println("2. Deluxe Room ("+deluxeRooms+" available) ");
     }
 }
 
