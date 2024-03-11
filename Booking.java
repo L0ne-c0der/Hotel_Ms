@@ -52,7 +52,11 @@ public class Booking {
             System.out.println("Enter number of children");
             children = sc.nextInt();
             System.out.println("Choose from different room types:");
-
+            display();
+            System.out.println("Enter your choice: ");
+            int roomChoice = sc.nextInt();
+            if(roomChoice == 1){
+            }    
         }
         else if (mainChoice==2) {
             //enter your code here
