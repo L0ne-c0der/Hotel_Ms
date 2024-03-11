@@ -20,7 +20,8 @@ class Room extends Guest{
     // int[] luxuryRooms = new int[1*5];
     // Room(int choice, )
     void display(){
-        System.out.println("1. ");
+        System.out.println("1. Single Room ("+singleRooms+" available) ");
+        System.out.println("2. Double Room ("+deluxeRooms+" available) ");
     }
 }
 
