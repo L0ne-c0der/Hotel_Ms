@@ -19,8 +19,8 @@ if 1:
 
     Types:
     1. Single Room
-    2. Deluxe Room
-    3. Luxury Room (Free breakfast)
+    2. Deluxe Room (Two singel beds/Queen bed)
+    3. Luxury Room (Free breakfast) - King Bed
     4. Luxury Suite (if time permits) (Free breakfast)
     5. Presidential Suite (Free breakfast)
     Enter the room type: 
@@ -49,7 +49,6 @@ if 1:
     {Breakfast}
 
     Basic Room Price                    n*{Price} 
-    Price after discounts               -(For children)
     Taxes, service fees, GST            +{%20 0f Price}
     Total Price                           Rs. ______
 
@@ -57,11 +56,8 @@ if 1:
 
     1. UPI/BHIM
     2. Credit/Debit/ATM Card
-    3. EMI
-    4. Net Banking
-    5. Gift Cards & e-wallets
-    6. Google Pay
-    7. Go back home (exit)
+    3. Google Pay
+    4. Go back home (exit)
 
 if 2:
     1. Upcoming (for now we will go with this one)

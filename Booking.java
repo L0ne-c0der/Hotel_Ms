@@ -1,33 +1,142 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-class Guest{
-    int children, adults;
+abstract class Guest{
+    String name;
+    String email;
+    // String CountryCode;
+    long phoneNo;
+    int adults;
+    int children;
     Guest(){
-        adults = 0;
-        children = 0;
+        name = "";
+        email = "";
+        phoneNo = 0;
     }
-    Guest(int ad, int ch){
-        adults = ad;
-        children = ch;
+    Guest(String n, String em, long ph, int child, int adult){
+        name = n;
+        email = em;
+        phoneNo = ph;
+        adults = adult;
+        children = child;
     }
-
 }
 class Room extends Guest{
     // Your code here
-    Scanner sc = new Scanner(System.in);
-    int singleRooms = 20;
-    int deluxeRooms = 15;
-    // int[] luxuryRooms = new int[1*5];
-    // Room(int choice, )
-    void display(){
+    // Scanner sc = new Scanner(System.in);
+    int singleRooms;
+    int deluxeRooms;
+    int luxuryRooms;
+    String roomType;
+    double price;
+    Room(){
+        super();
+        singleRooms = 20;
+        deluxeRooms = 15;
+        luxuryRooms = 6;
+        price = 0;
+    }
+    Room(int choice){
+        switch (choice) {
+            case 1:
+                singleRooms--;
+                roomType = "Single Room";
+                price = 2500;
+                break;
+            
+            case 2:
+                deluxeRooms--;
+                roomType = "Deluxe Room ";
+                price = 5250;
+                break;
+            case 3:
+                luxuryRooms--;
+                roomType = "Luxury Room";
+                price = 10000;
+                break;
+            default:
+                System.out.println("Wrong choice, please try again");
+                break;
+        }
+    }
+    void displayRoom(){
         System.out.println("1. Single Room ("+singleRooms+" available) ");
         System.out.println("2. Deluxe Room ("+deluxeRooms+" available) ");
+        System.out.println("3. Luxury Room ("+luxuryRooms+" available) ");
     }
 }
 
 class Reservation extends Room{
-    Scanner sc = new Scanner(System.in);
+    // Scanner sc = new Scanner(System.in);
+    String StartDate;
+    String EndDate;
+    int noDays;
+    Reservation(){
+        StartDate= "";
+        EndDate= "";
+        noDays = 0;
+    }
+    Reservation(String n, String em, long ph, String ad, String ch, String st, String en, int choice){
+        super();
+        StartDate = st;
+        EndDate= en;
+        noDays = CalcDate(StartDate, EndDate);
+    }
+    public int CalcDate(String StartDate, String EndDate){
+        String[] startParts = StartDate.split("/");
+        String[] endParts = EndDate.split("/");
+        int start=0;
+        int end=0;
+        if (startParts[2]==endParts[2]) {
+            start = Integer.parseInt(startParts[0]);
+            end = Integer.parseInt(endParts[0]);
+            if (startParts[1]!=endParts[1]) {
+                end = end+31;
+            }
+        }
+        return end-start;
+    }
+}
 
+class Billing extends Reservation{
+    double gst;
+    double totalPrice;
+    Billing(){
+        gst = 0;
+    }
+    Billing(String n, String em, long ph, String st, String en, int choice){
+        super();
+        Scanner sc = new Scanner(System.in);
+        gst = 0.2*price;
+        totalPrice = price + gst;
+        displayBill();
+        int paymentChoice = sc.nextInt();
+        switch (paymentChoice) {
+            case 1:
+                System.out.println("Enter UPI ID:");
+                long uPi = sc.nextLong();
+                System.out.println("A request has been sent to your UPI ID. Please proceed to your respective UPI app to continue payment");
+                break;
+            case 2:
+                System.out.println("Enter Debit/ Credit Number:");
+                long debNo = sc.nextLong();
+                System.out.println("Enter the Expiry Details: (MM/YY)");
+                String expString = sc.next();
+                System.out.println("Enter CVV:");
+                int cvv = sc.nextInt();
+                break;
+        }
+    }
+    public void displayBill(){
+        System.out.println("Price:");
+        System.out.println(roomType+"\t\t"+adults+"adults"+children+"children");
+        System.out.println("Basic Room Price \t\tRs"+(noDays*price));
+        System.out.println("Taxes, service fees, GST\t\t\t"+"+Rs"+(noDays*gst));
+        System.out.println("Total Price\t\t\tRs"+totalPrice);
+        System.out.println("Please choose the payment method:");
+        System.out.println("1.UPI/BHIM");
+        System.out.println("2. Credit/Debit/ATM Card");
+        System.out.println("Press any other number to go back home (exit)");
+    }
 }
 
 public class Booking {
@@ -47,20 +156,30 @@ public class Booking {
             System.out.println("Enter check-out date from 12:00 PM (DD/MM/YYYY):  ");
             checkout = sc.next();
             System.out.println("Enter the guest details:");
+            System.out.println("Enter the name to book under:");
+            String name = sc.next();
             System.out.println("Enter number of adults: ");
             adults = sc.nextInt();
             System.out.println("Enter number of children");
             children = sc.nextInt();
             System.out.println("Choose from different room types:");
             Room rooms = new Room();
-            rooms.display();
+            rooms.displayRoom();
             System.out.println("Enter your choice: ");
             int roomChoice = sc.nextInt();
+            System.out.println("");
             if(roomChoice == 1){
+                Billing book = new Billing();
             }  
         }
         else if (mainChoice==2) {
             //enter your code here
+
         }
     }
 }
+
+
+//create an arraylist that keeps entries on the dates where reservations are done
+//also an array or arraylist of booking elements to dislay for reserved rooms
+//once a room is cancelled, we will remove one entry from the booking elements and dates respectively
