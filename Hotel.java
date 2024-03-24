@@ -204,6 +204,7 @@ class Reservation extends Dates{
                 if (guests.points<=28*numRooms) {
                     addDates(5, numRooms);
                 }
+                break;
             default:
                 System.out.println("Wrong choice. Please try again");
                 break;
@@ -305,7 +306,7 @@ class Billings{
                 while (true) {   
                     System.out.println("Enter UPI ID:");
                     String uPi = sc.next();
-                    if (uPi.contains("@") && uPi.contains(".")){
+                    if (uPi.contains("@")){
                         System.out.println("A request has been sent to your UPI ID. Please proceed to your respective UPI app to continue payment");
                         break;
                     }
@@ -313,6 +314,7 @@ class Billings{
                         System.out.println("Invalid upi Id ! Please enter an upi Id containing '@' and a bank name. ");
                     }
                 }
+                break;
             case 2:
                     LocalDate currentDate = LocalDate.now();
 
@@ -370,6 +372,7 @@ class Billings{
                                 System.out.println("Error: Invalid input format.");
                             }
                         }
+                    break;
         }
         System.out.println("Enter payment ID:");
         String pymentID = sc.next();
@@ -443,6 +446,7 @@ public class Hotel {
     public static void main(String[] args) {
         // Your code here
         Scanner sc = new Scanner(System.in);
+        String email;
         System.out.println("--------------------- Welcome to Dream Hotel ------------------------");
         while (true) {
             System.out.println("Please enter your name:");
@@ -457,26 +461,15 @@ public class Hotel {
         }
         while (true) {
             System.out.println("Please enter your email:");
-            String email = sc.nextLine();
-
-            if (email.contains("@") && email.contains(".")){
-                break;
-            }
-            else{
-                System.out.println("Invalid email address! Please enter an email address containing '@' and a domain name.");
-            }
-        }
-        while (true) {
-            System.out.println("Please enter your email:");
-            String email = sc.nextLine();
-
-            if (email.matches("[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}")) {
+            email = sc.nextLine();
+            
+            if (email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
+                // Check if "@" comes before "."
                 int atIndex = email.indexOf('@');
                 int dotIndex = email.lastIndexOf('.');
 
-                // Check if "@" comes after "."
                 if (atIndex > dotIndex) {
-                    System.out.println("Invalid email address! Please ensure '@' comes after '.'.");
+                    System.out.println("Invalid email address! Please ensure '@' comes before '.'.");
                     continue;
                 }
 
@@ -494,9 +487,10 @@ public class Hotel {
 
                 break; // Exit the loop if the email is valid
             } else {
-                System.out.println("Invalid email address! Please enter a valid email address.");
+                System.out.println("Invalid email address format! Please enter a valid email address.");
             }
         }
+        
         while (true){
             System.out.println("\t\t\t\t HOME \t\t\t\t");
             System.out.println("Choose one of the given options:");
@@ -626,11 +620,13 @@ public class Hotel {
                         System.out.println("Enter the booking number to cancel: ");
                         int cancelNo = sc.nextInt();
                         b1.CancelBooking(cancelNo-1);
+                        System.out.println("The booking has been cancelled successfully.");
                     }
                 }
                 
             }
             else{
+                System.out.println("Thank you for choosing Dream Hotel. We look forward to hosting you again soon!");
                 break;
             }
 
