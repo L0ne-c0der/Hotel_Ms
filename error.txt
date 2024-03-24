@@ -1,0 +1,8 @@
+i have used next line so the code excute line after line 
+if i press @ in name it is showing email error handlind rather than name handling statement so i have use next line!
+
+java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy") it is a method which is a data formatter 
+it helps us to tell that the time input is dd/mm/yyyy. or take time input in dd/mm/yyyy.
+
+the DateTimeParseException is caused when we enter invaild date (days more 31 months >31 )
+i have taken scanner in catch block so that it will take the trash value and it will continue the loop or else it will infinetly loop

@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.List;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 interface Room {
     static ArrayList<ArrayList<Integer>> rooms = initializeRooms();
@@ -202,6 +204,7 @@ class Reservation extends Dates{
                 if (guests.points<=28*numRooms) {
                     addDates(5, numRooms);
                 }
+                break;
             default:
                 System.out.println("Wrong choice. Please try again");
                 break;
@@ -300,18 +303,76 @@ class Billings{
         int payChoice = sc.nextInt();
         switch (payChoice) {
             case 1:
-                System.out.println("Enter UPI ID:");
-                String uPi = sc.next();
-                System.out.println("A request has been sent to your UPI ID. Please proceed to your respective UPI app to continue payment");
+                while (true) {   
+                    System.out.println("Enter UPI ID:");
+                    String uPi = sc.next();
+                    if (uPi.contains("@")){
+                        System.out.println("A request has been sent to your UPI ID. Please proceed to your respective UPI app to continue payment");
+                        break;
+                    }
+                    else{
+                        System.out.println("Invalid upi Id ! Please enter an upi Id containing '@' and a bank name. ");
+                    }
+                }
                 break;
             case 2:
-                System.out.println("Enter Debit/ Credit Number:");
-                long debNo = sc.nextLong();
-                System.out.println("Enter the Expiry Details: (MM/YY)");
-                String expString = sc.next();
-                System.out.println("Enter CVV:");
-                int cvv = sc.nextInt();
-                break;
+                    LocalDate currentDate = LocalDate.now();
+
+                    
+                    int currentMonth = currentDate.getMonthValue();
+                    int currentYear = currentDate.getYear() % 100;
+                        while (true) {
+                            try{
+            
+                                System.out.println("Enter Debit/ Credit Number:");
+                                String debNo = sc.nextLine().trim();
+                                if (debNo.length() != 16) {
+                                    System.out.println("card number invalid! please enter a 16 digit number:  ");
+                                    continue;
+                                }
+            
+                                sc.nextLine();
+            
+                                
+                                System.out.println("Enter the Expiry Details (MM/YY):");
+                                String expString = sc.nextLine();
+                                
+                                if (!expString.matches("\\d{2}/\\d{2}")) {
+                                    System.out.println("Invalid expiry date format! Please enter in MM/YY format.");
+                                    continue;
+                                }
+            
+                                int expMonth = Integer.parseInt(expString.substring(0, 2));
+                                int expYear = Integer.parseInt(expString.substring(3));
+                
+                                if (expYear < currentYear || (expYear == currentYear && expMonth <= currentMonth)) {
+                                    System.out.println("Error: Expiry date must be after the current date.");
+                                    continue;
+                                }
+                                System.out.println("Enter CVV (4 digits):");
+                                int cvv = sc.nextInt();
+                
+                                
+                                if (String.valueOf(cvv).length() != 4) {
+                                    System.out.println("Error: CVV must be 4 digits.");
+                                    continue;
+                                }
+                
+                                
+                                break;
+
+                            } 
+                            catch (InputMismatchException e) 
+                            {
+                                System.out.println("Invalid input! Please enter a valid value.");
+                                sc.nextLine(); // Consume the invalid input
+                            } 
+                            catch (NumberFormatException e) 
+                            {
+                                System.out.println("Error: Invalid input format.");
+                            }
+                        }
+                    break;
         }
         System.out.println("Enter payment ID:");
         String pymentID = sc.next();
@@ -385,40 +446,158 @@ public class Hotel {
     public static void main(String[] args) {
         // Your code here
         Scanner sc = new Scanner(System.in);
+        String email;
         System.out.println("--------------------- Welcome to Dream Hotel ------------------------");
-        System.out.println("Please enter your name:");
-        String name = sc.next();
-        System.out.println("Please enter your email:");
-        String email = sc.next();
-        System.out.println("Please enter your phone number(+__ ______):");
-        String countryCode = sc.next();
-        String phoneNo = sc.next();
+        while (true) {
+            System.out.println("Please enter your name:");
+            String name = sc.nextLine();
+            
+            if (name.matches("[a-zA-Z\\s]+")) {
+                break;
+            }
+            else{
+                System.out.println("Name invalid! Please enter only alphabets.");
+            }
+        }
+        while (true) {
+            System.out.println("Please enter your email:");
+            email = sc.nextLine();
+            
+            if (email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
+                // Check if "@" comes before "."
+                int atIndex = email.indexOf('@');
+                int dotIndex = email.lastIndexOf('.');
+
+                if (atIndex > dotIndex) {
+                    System.out.println("Invalid email address! Please ensure '@' comes before '.'.");
+                    continue;
+                }
+
+                // Check if there is only one "@" symbol
+                if (email.indexOf('@', atIndex + 1) != -1) {
+                    System.out.println("Invalid email address! Please enter only one '@' symbol.");
+                    continue;
+                }
+
+                // Check if there is only one "." symbol
+                if (email.indexOf('.', dotIndex + 1) != -1) {
+                    System.out.println("Invalid email address! Please enter only one '.' symbol.");
+                    continue;
+                }
+
+                break; // Exit the loop if the email is valid
+            } else {
+                System.out.println("Invalid email address format! Please enter a valid email address.");
+            }
+        }
+        
         while (true){
             System.out.println("\t\t\t\t HOME \t\t\t\t");
             System.out.println("Choose one of the given options:");
             System.out.println("(1) Check for rooms                   (2) Manage reservation(s)");
             System.out.println("Choose your option: ");
             int mainChoice = sc.nextInt();
+            String checkin;
+            String checkout ;
             if(mainChoice==1){
-                System.out.println(" Enter check-in date from 12:00 PM (DD/MM/YYYY):  ");
-                String checkin = sc.next();
-                System.out.println("Enter check-out date before 12:00 PM (DD/MM/YYYY):  ");
-                String checkout = sc.next();
+                while (true) {
+                    try{
+                        System.out.println(" Enter check-in date from 12:00 PM (DD/MM/YYYY):  ");
+                        checkin = sc.next();
+                        
+                        if (!checkin.matches("\\d{2}/\\d{2}/\\d{4}")) {
+                            System.out.println("Error: Invalid check-in date format. Please enter in DD/MM/YYYY format.");
+                            continue; // Continue to the next iteration of the loop
+                        }
+                        System.out.println("Enter check-out date before 12:00 PM (DD/MM/YYYY):  ");
+                        checkout = sc.next();
+    
+                        if (!checkout.matches("\\d{2}/\\d{2}/\\d{4}")) {
+                            System.out.println("Error: Invalid check-out date format. Please enter in DD/MM/YYYY format.");
+                            continue; // Continue to the next iteration of the loop
+                        }
+                        LocalDate checkinDate = LocalDate.parse(checkin, java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));LocalDate checkoutDate = LocalDate.parse(checkout, java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    
+                        if (checkinDate.isAfter(checkoutDate)) {
+                            System.out.println("Check-in date cannot be after the checkout date. Please enter again.");
+                            continue; // Continue to the next iteration of the loop
+                        }
+
+                        if (checkinDate.equals(checkoutDate)) {
+                            System.out.println("Error: Check-in and check-out dates cannot be the same. Please enter again.");
+                            continue; // Continue to the next iteration of the loop
+                        }
+    
+                        break;
+                    }
+
+                    catch(DateTimeParseException e){
+                        System.out.println("Invalid date format. Please enter the date in DD/MM/YYYY format.");
+                        sc.nextLine(); 
+                    }
+            
+                }
+                
                 Reservation checkdates = new Reservation(checkin,checkout);
                 checkdates.displayRoom();
                 System.out.println("Do you wish to make a reservation(Type 1 for yes):");
                 int resChoice = sc.nextInt();
+                int adults = 0 ;
+                int children= 0;
+                int roomType = 0;
+                int num = 0;
                 if(resChoice==1){
-                    System.out.println("Enter number of adults: ");
-                    int adults = sc.nextInt();
-                    System.out.println("Enter number of children(0 to 12 years old): ");
-                    int children = sc.nextInt();
-                    System.out.println("Select the room type you wish to choose:");
-                    checkdates.displayRoom();
-                    System.out.println("Enter your choice:");
-                    int roomType = sc.nextInt();
-                    System.out.println("Enter the number of rooms you want to book:");
-                    int num = sc.nextInt();
+                    while (true) {
+                        try {
+                            
+                            System.out.println("Enter number of adults: ");
+                            adults = sc.nextInt();
+            
+                          
+                            if (adults <= 0) {
+                                System.out.println("Number of adults must be greater than 0. Please enter again.");
+                                continue; 
+                            }
+            
+                            
+                            System.out.println("Enter number of children (0 to 12 years old): ");
+                            children = sc.nextInt();
+            
+                            
+                            if (children < 0) {
+                                System.out.println("Number of children must be greater than or equal to 0. Please enter again.");
+                                continue;
+                            }
+            
+                            System.out.println("Select the room type you wish to choose:");
+                            System.out.println("\n1)Single Rooms\n2)Double Rooms\n3Luxury Rooms");
+                            System.out.println("\nEnter your choice:");
+                            roomType = sc.nextInt();
+
+                            if (roomType < 1 || roomType > 3) {
+                                System.out.println("Invalid room type. Please enter a valid option.");
+                                continue;
+                            }
+            
+                            System.out.println("Enter the number of rooms you want to book:");
+                            num = sc.nextInt();
+                            
+
+                            if ((roomType == 1 && adults > 1) ||
+                            (roomType == 2 && adults + children > 3) ||
+                            (roomType == 3 && adults + children > 4)) {
+                            System.out.println("Error: Maximum occupancy exceeded for the selected room type.");
+                            continue;
+                        }
+
+                            break;
+            
+                        } catch (InputMismatchException e) {
+                            System.out.println("Error: Invalid input. Please enter a valid integer.");
+                            sc.next(); // Consume the invalid input
+                        }
+                  }
+                    
                     Guest guests = new Guest(adults,children);
                     Reservation res1 = new Reservation(checkin,checkout,guests,roomType,num);
                     Billings b1 = new Billings(res1, guests);
@@ -441,11 +620,13 @@ public class Hotel {
                         System.out.println("Enter the booking number to cancel: ");
                         int cancelNo = sc.nextInt();
                         b1.CancelBooking(cancelNo-1);
+                        System.out.println("The booking has been cancelled successfully.");
                     }
                 }
                 
             }
             else{
+                System.out.println("Thank you for choosing Dream Hotel. We look forward to hosting you again soon!");
                 break;
             }
 
