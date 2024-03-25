@@ -97,33 +97,22 @@ abstract class Dates implements Room{
     void displayRoom(){
         int row = maxRooms();
         System.out.println();
-        System.out.println("\t\tRoom types:-");
-        System.out.println();
-        System.out.println("Single Rooms ("+rooms.get(row).get(3)+" available):");
-        System.out.println("  -Cozy accommodation ideal for solo travelers\n\n" + //
-                        "  -Compact workspace provided\n\n" + //
-                        "  -Comfortable single bed for a restful sleep\n\n" + //
-                        "  -Perfect for short stays or business trips\n\n" + //
-                        "  -All necessary amenities included\n\n" + //
-                        "  -Maximum occupancy: 1 adult\n\n");
-        System.out.println("_______________________________________________\n");
-        System.out.println("Double Rooms("+rooms.get(row).get(4)+" available):\n");
-        System.out.println("  -Spacious and elegantly furnished\n\n" + //
-                        "  -Tranquil ambiance for relaxation\n\n" + //
-                        "  -Choice of one queen-size bed or two twin beds\n\n" + //
-                        "  -Plush bedding for added comfort\n\n" + //
-                        "  -Upgraded amenities for a luxurious experience\n\n" + //
-                        "  -Suitable for couples or small families\n\n" + //
-                        "  -Maximum occupancy: 2 adults + 1 child\n\n");
-        System.out.println("_______________________________________________\n");
-        System.out.println("Luxury Rooms("+rooms.get(row).get(5)+" available):");
-        System.out.println("  -Opulent interiors with exquisite decor\n\n" + //
-                        "  -Breathtaking views from the room\n\n" + //
-                        "  -Choice of one king-size bed or two queen-size beds\n\n" + //
-                        "  -Top-of-the-line amenities for ultimate comfort\n\n" + //
-                        "  -Perfect for a luxurious and memorable stay\n\n" + //
-                        "  -Ideal for couples or families seeking luxury\n\n" + //
-                        "  -Maximum occupancy: 2 adults + 2 children");
+        System.out.println("\t\tRoom types:");
+        System.out.println("");
+        System.out.println("| S.No | Room Type       | Description                                 |");
+        System.out.println("|++|");
+        System.out.printf("|  1   | Single Rooms    | %d available                                |\n", rooms.get(row).get(3));
+        System.out.println("|      |                 | - Solo traveler's cozy workspace            |");
+        System.out.println("|      |                 | - Maximum occupancy: 1 adult                |");
+        System.out.println("|------+-----------------+---------------------------------------------|");
+        System.out.printf("|  2   | Double Rooms    | %d available                                |\n", rooms.get(row).get(4));
+        System.out.println("|      |                 | - Spacious, Elegant, Tranquil, Luxurious    |");
+        System.out.println("|      |                 | - Maximum occupancy: 2 adults + 1 child     |");
+        System.out.println("|------+-----------------+---------------------------------------------|");
+        System.out.printf("|  3   | Luxury Rooms    | %d available                                 |\n", rooms.get(row).get(5));
+        System.out.println("|      |                 | - Luxurious, breathtaking, comfortable      |");
+        System.out.println("|      |                 | - Maximum occupancy: 2 adults + 2 children  |");
+        System.out.println("");
 
     }
     long calcDates(){
@@ -507,6 +496,7 @@ public class Hotel {
             System.out.println("\t\t\t\t HOME \t\t\t\t");
             System.out.println("Choose one of the given options:");
             System.out.println("(1) Check for rooms                   (2) Manage reservation(s)");
+            System.out.println("To contact us:\nPhone number: +91 8555095546\nE-mail:nkolanu@gitam.in");
             System.out.println("Choose your option: ");
             int mainChoice = sc.nextInt();
             String checkin;
