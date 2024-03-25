@@ -312,7 +312,7 @@ class Billings{
             
                                 
                                 System.out.println("Enter the Expiry Details (MM/YY):");
-                                String expString = sc.nextLine();
+                                String expString = sc.next();
                                 
                                 if (!expString.matches("\\d{2}/\\d{2}")) {
                                     System.out.println("Invalid expiry date format! Please enter in MM/YY format.");
@@ -538,119 +538,106 @@ public class Hotel {
                     }
             
                 }
-                
                 Reservation checkdates = new Reservation(checkin,checkout);
                 checkdates.displayRoom();
-                int resChoice = 0;
-                    while (true) {
-                        System.out.println("Do you wish to make a reservation(Type 1 for yes):");
-                        resChoice = sc.nextInt();
+                String resChoice = "";
+                    System.out.println("Do you wish to make a reservation(Type YES to Continue):");
+                    resChoice = sc.next();
     
-                        if (resChoice == 1){
-                            break;
-                        }
-                        else{
-                            System.out.println("enter a valid number: ");
-                        }
-                    }
+                if (!resChoice.equalsIgnoreCase("yes")){
+                    System.out.println("You have selected not to make a reservation");
+                    System.out.println("Redirecting to home");
+                    continue;
+                }
                 int adults = 0 ;
                 int children= 0;
                 int roomType = 0;
                 int num = 0;
-                if(resChoice==1){
-                    Guest guests = new Guest();
-                    while (true) {
-                        try {
-                            
-                            System.out.println("Enter number of adults: ");
-                            adults = sc.nextInt();
+                Guest guests = new Guest();
+                while (true) {
+                    try {
+
+                        System.out.println("Enter number of adults: ");
+                        adults = sc.nextInt();
             
                           
-                            if (adults <= 0) {
-                                System.out.println("Number of adults must be greater than 0. Please enter again.");
-                                continue; 
-                            }
+                        if (adults <= 0) {
+                            System.out.println("Number of adults must be greater than 0. Please enter again.");
+                            continue; 
+                        }
             
                             
-                            System.out.println("Enter number of children (0 to 12 years old): ");
-                            children = sc.nextInt();
+                        System.out.println("Enter number of children (0 to 12 years old): ");
+                        children = sc.nextInt();
             
                             
-                            if (children < 0) {
-                                System.out.println("Number of children must be greater than or equal to 0. Please enter again.");
-                                continue;
-                            }
+                        if (children < 0) {
+                            System.out.println("Number of children must be greater than or equal to 0. Please enter again.");
+                            continue;
+                        }
 
-                            break;
-                        }
-                        catch(InputMismatchException e){
-                            System.out.println("Error: Invalid input. Please enter a valid integer.");
-                            sc.next(); // Consume the invalid input
-                        }
+                        break;
                     }
-                    guests = new Guest(adults,children);
+                    catch(InputMismatchException e){
+                        System.out.println("Error: Invalid input. Please enter a valid integer.");
+                        sc.next(); // Consume the invalid input
+                    }
+                }
+                guests = new Guest(adults,children);
 
-                    while (true) {
+                while (true) {
                         
-                        try{
-                            System.out.println("Select the room type you wish to choose:");
-                            System.out.println("\n1)Single Rooms\n2)Double Rooms\n3Luxury Rooms");
-                            System.out.println("\nEnter your choice:");
-                            roomType = sc.nextInt();
+                    try{
+                        System.out.println("Select the room type you wish to choose:");
+                        System.out.println("\n1)Single Rooms\n2)Double Rooms\n3Luxury Rooms");
+                        System.out.println("\nEnter your choice:");
+                        roomType = sc.nextInt();
     
-                            if (roomType < 1 || roomType > 3) {
-                                System.out.println("Invalid room type. Please enter a valid option.");
-                                continue;
-                            }
-                            while (true) {
-                                System.out.println("Enter the number of rooms you want to book:");
-                                num = sc.nextInt();
+                        if (roomType < 1 || roomType > 3) {
+                            System.out.println("Invalid room type. Please enter a valid option.");
+                            continue;
+                        }
+                        while (true) {
+                            System.out.println("Enter the number of rooms you want to book:");
+                            num = sc.nextInt();
                                 
-                                if (num >= 0) {
-                                    break; // Exit the loop if the input is not negative
-                                } else {
-                                    System.out.println("Invalid input! Please enter a non-negative number of rooms.");
-                                }
+                            if (num >= 0) {
+                                break; // Exit the loop if the input is not negative
+                            } else {
+                                System.out.println("Invalid input! Please enter a non-negative number of rooms.");
                             }
-
+                        }
         
-                                switch (roomType) {
-                                    case 1:
-                                        if (guests.points>10*num) {
-                                            System.out.println("no of people are more than room's capacity \n");
-                                            continue;
-                                        }
-                                    case 2:
-                                        if (guests.points>24*num) {
-                                            System.out.println("no of people are more than room's capacity\n");
-                                            continue;
-                                        }
-                                    case 3:
-                                        if (guests.points>28*num) {
-                                            System.out.println("no of people are more than room's capacity\n");
-                                            continue;
-                                        }
-                                }
+                            switch (roomType) {
+                                case 1:
+                                    if (guests.points>10*num) {
+                                        System.out.println("no of people are more than room's capacity \n");
+                                        continue;
+                                    }
+                                case 2:
+                                    if (guests.points>24*num) {
+                                        System.out.println("no of people are more than room's capacity\n");
+                                        continue;
+                                    }
+                                case 3:
+                                    if (guests.points>28*num) {
+                                        System.out.println("no of people are more than room's capacity\n");
+                                        continue;
+                                    }
+                            }
 
                             
-                            break;
-            
-                        } catch (InputMismatchException e) {
-                            System.out.println("Error: Invalid input. Please enter a valid integer.");
-                            sc.next(); // Consume the invalid input
-                        }
+                        break;
+        
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error: Invalid input. Please enter a valid integer.");
+                        sc.next(); // Consume the invalid input
                     }
-
-                  
-                    
-                    Reservation res1 = new Reservation(checkin,checkout,guests,roomType,num);
-                    Billings b1 = new Billings(res1, guests);
-                    Bookings.AddBooking(b1);
-                    System.out.println();
                 }
-                else{
-                    break;
-                }
+                Reservation res1 = new Reservation(checkin,checkout,guests,roomType,num);
+                Billings b1 = new Billings(res1, guests);
+                Bookings.AddBooking(b1);
+                System.out.println();
             }
             else if(mainChoice==2){
                 System.out.println("Your Reservations:");
