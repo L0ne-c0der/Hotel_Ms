@@ -541,8 +541,18 @@ public class Hotel {
                 
                 Reservation checkdates = new Reservation(checkin,checkout);
                 checkdates.displayRoom();
-                System.out.println("Do you wish to make a reservation(Type 1 for yes):");
-                int resChoice = sc.nextInt();
+                int resChoice = 0;
+                    while (true) {
+                        System.out.println("Do you wish to make a reservation(Type 1 for yes):");
+                        resChoice = sc.nextInt();
+    
+                        if (resChoice == 1){
+                            break;
+                        }
+                        else{
+                            System.out.println("enter a valid number: ");
+                        }
+                    }
                 int adults = 0 ;
                 int children= 0;
                 int roomType = 0;
