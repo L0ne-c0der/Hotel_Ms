@@ -491,6 +491,7 @@ public class Hotel {
             int mainChoice = sc.nextInt();
             String checkin;
             String checkout ;
+            LocalDate currentDate = LocalDate.now();
             if(mainChoice==1){
                 while (true) {
                     try{
@@ -501,6 +502,8 @@ public class Hotel {
                             System.out.println("Error: Invalid check-in date format. Please enter in DD/MM/YYYY format.");
                             continue; // Continue to the next iteration of the loop
                         }
+
+
                         System.out.println("Enter check-out date before 12:00 PM (DD/MM/YYYY):  ");
                         checkout = sc.next();
     
@@ -510,10 +513,16 @@ public class Hotel {
                         }
                         LocalDate checkinDate = LocalDate.parse(checkin, java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));LocalDate checkoutDate = LocalDate.parse(checkout, java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     
+                        if (checkinDate.isBefore(currentDate)) {
+                            System.out.println("Check-in date cannot be before  the current  date. Please enter again.");
+                            continue; // Continue to the next iteration of the loop
+                        }
+                        
                         if (checkinDate.isAfter(checkoutDate)) {
                             System.out.println("Check-in date cannot be after the checkout date. Please enter again.");
                             continue; // Continue to the next iteration of the loop
                         }
+
 
                         if (checkinDate.equals(checkoutDate)) {
                             System.out.println("Error: Check-in and check-out dates cannot be the same. Please enter again.");
