@@ -174,29 +174,15 @@ class Reservation extends Dates{
         this.choice = choice;
         switch (choice) {
             case 1:
-                if (guests.points<=10*numRooms) {
                     addDates(3,numRooms);
-                }
-                else{
-                    System.out.println("Single rooms can accomodate only one guest. Please try again");
-                }
-                break;
+                    break;
+                
             case 2:
-                if (guests.points<=24*numRooms) {
                     addDates(4, numRooms);
-                }
-                else{
-                    System.out.println("Double rooms can accomodate only upto 2 adults and 1 children\n Please try again");
-                }
-                break;
+                    break;
             case 3:
-                if (guests.points<=28*numRooms) {
                     addDates(5, numRooms);
-                }
-                break;
-            default:
-                System.out.println("Wrong choice. Please try again");
-                break;
+                    break;
         }
 
     }
@@ -274,10 +260,25 @@ class Billings{
         totalPrice = beforeGst + gst;
         displayBill(g1.adults, g1.children);
         System.out.println();
-        System.out.println("Please choose the payment method:");
-        System.out.println("1.UPI/BHIM");
-        System.out.println("2. Credit/Debit/ATM Card");
-        int payChoice = sc.nextInt();
+        int payChoice = 0;
+        while (true) {
+            System.out.println("Please choose the payment method:");
+            System.out.println("1.UPI/BHIM");
+            System.out.println("2. Credit/Debit/ATM Card");
+
+            if (sc.hasNextInt()) {
+                payChoice = sc.nextInt();
+                if (payChoice == 1 || payChoice == 2) {
+                    break; 
+                } else {
+                    System.out.println("Invalid choice! Please enter 1 or 2.");
+                }
+            }
+            else {
+                System.out.println("Invalid input! Please enter a valid integer choice.");
+                sc.next();
+            }
+        }
         switch (payChoice) {
             case 1:
                 while (true) {   
@@ -539,6 +540,7 @@ public class Hotel {
                 int roomType = 0;
                 int num = 0;
                 if(resChoice==1){
+                    Guest guests = new Guest();
                     while (true) {
                         try {
                             
@@ -560,19 +562,58 @@ public class Hotel {
                                 System.out.println("Number of children must be greater than or equal to 0. Please enter again.");
                                 continue;
                             }
-            
+
+                            break;
+                        }
+                        catch(InputMismatchException e){
+                            System.out.println("Error: Invalid input. Please enter a valid integer.");
+                            sc.next(); // Consume the invalid input
+                        }
+                    }
+                    guests = new Guest(adults,children);
+
+                    while (true) {
+                        
+                        try{
                             System.out.println("Select the room type you wish to choose:");
                             System.out.println("\n1)Single Rooms\n2)Double Rooms\n3Luxury Rooms");
                             System.out.println("\nEnter your choice:");
                             roomType = sc.nextInt();
-
+    
                             if (roomType < 1 || roomType > 3) {
                                 System.out.println("Invalid room type. Please enter a valid option.");
                                 continue;
                             }
-            
-                            System.out.println("Enter the number of rooms you want to book:");
-                            num = sc.nextInt();
+                            while (true) {
+                                System.out.println("Enter the number of rooms you want to book:");
+                                num = sc.nextInt();
+                                
+                                if (num >= 0) {
+                                    break; // Exit the loop if the input is not negative
+                                } else {
+                                    System.out.println("Invalid input! Please enter a non-negative number of rooms.");
+                                }
+                            }
+
+        
+                                switch (roomType) {
+                                    case 1:
+                                        if (guests.points>10*num) {
+                                            System.out.println("no of people are more than room's capacity \n");
+                                            continue;
+                                        }
+                                    case 2:
+                                        if (guests.points>24*num) {
+                                            System.out.println("no of people are more than room's capacity\n");
+                                            continue;
+                                        }
+                                    case 3:
+                                        if (guests.points>28*num) {
+                                            System.out.println("no of people are more than room's capacity\n");
+                                            continue;
+                                        }
+                                }
+
                             
                             break;
             
@@ -580,9 +621,10 @@ public class Hotel {
                             System.out.println("Error: Invalid input. Please enter a valid integer.");
                             sc.next(); // Consume the invalid input
                         }
-                  }
+                    }
+
+                  
                     
-                    Guest guests = new Guest(adults,children);
                     Reservation res1 = new Reservation(checkin,checkout,guests,roomType,num);
                     Billings b1 = new Billings(res1, guests);
                     Bookings.AddBooking(b1);
