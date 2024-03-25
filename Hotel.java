@@ -97,33 +97,22 @@ abstract class Dates implements Room{
     void displayRoom(){
         int row = maxRooms();
         System.out.println();
-        System.out.println("\t\tRoom types:-");
-        System.out.println();
-        System.out.println("Single Rooms ("+rooms.get(row).get(3)+" available):");
-        System.out.println("  -Cozy accommodation ideal for solo travelers\n\n" + //
-                        "  -Compact workspace provided\n\n" + //
-                        "  -Comfortable single bed for a restful sleep\n\n" + //
-                        "  -Perfect for short stays or business trips\n\n" + //
-                        "  -All necessary amenities included\n\n" + //
-                        "  -Maximum occupancy: 1 adult\n\n");
-        System.out.println("_______________________________________________\n");
-        System.out.println("Double Rooms("+rooms.get(row).get(4)+" available):\n");
-        System.out.println("  -Spacious and elegantly furnished\n\n" + //
-                        "  -Tranquil ambiance for relaxation\n\n" + //
-                        "  -Choice of one queen-size bed or two twin beds\n\n" + //
-                        "  -Plush bedding for added comfort\n\n" + //
-                        "  -Upgraded amenities for a luxurious experience\n\n" + //
-                        "  -Suitable for couples or small families\n\n" + //
-                        "  -Maximum occupancy: 2 adults + 1 child\n\n");
-        System.out.println("_______________________________________________\n");
-        System.out.println("Luxury Rooms("+rooms.get(row).get(5)+" available):");
-        System.out.println("  -Opulent interiors with exquisite decor\n\n" + //
-                        "  -Breathtaking views from the room\n\n" + //
-                        "  -Choice of one king-size bed or two queen-size beds\n\n" + //
-                        "  -Top-of-the-line amenities for ultimate comfort\n\n" + //
-                        "  -Perfect for a luxurious and memorable stay\n\n" + //
-                        "  -Ideal for couples or families seeking luxury\n\n" + //
-                        "  -Maximum occupancy: 2 adults + 2 children");
+        System.out.println("\t\tRoom types:");
+        System.out.println("");
+        System.out.println("| S.No | Room Type       | Description                                 |");
+        System.out.println("|++|");
+        System.out.printf("|  1   | Single Rooms    | %d available                                |\n", rooms.get(row).get(3));
+        System.out.println("|      |                 | - Solo traveler's cozy workspace            |");
+        System.out.println("|      |                 | - Maximum occupancy: 1 adult                |");
+        System.out.println("|------+-----------------+---------------------------------------------|");
+        System.out.printf("|  2   | Double Rooms    | %d available                                |\n", rooms.get(row).get(4));
+        System.out.println("|      |                 | - Spacious, Elegant, Tranquil, Luxurious    |");
+        System.out.println("|      |                 | - Maximum occupancy: 2 adults + 1 child     |");
+        System.out.println("|------+-----------------+---------------------------------------------|");
+        System.out.printf("|  3   | Luxury Rooms    | %d available                                 |\n", rooms.get(row).get(5));
+        System.out.println("|      |                 | - Luxurious, breathtaking, comfortable      |");
+        System.out.println("|      |                 | - Maximum occupancy: 2 adults + 2 children  |");
+        System.out.println("");
 
     }
     long calcDates(){
@@ -185,47 +174,21 @@ class Reservation extends Dates{
         this.choice = choice;
         switch (choice) {
             case 1:
-                if (guests.points<=10*numRooms) {
                     addDates(3,numRooms);
-                }
-                else{
-                    System.out.println("Single rooms can accomodate only one guest. Please try again");
-                }
-                break;
+                    break;
+                
             case 2:
-                if (guests.points<=24*numRooms) {
                     addDates(4, numRooms);
-                }
-                else{
-                    System.out.println("Double rooms can accomodate only upto 2 adults and 1 children\n Please try again");
-                }
-                break;
+                    break;
             case 3:
-                if (guests.points<=28*numRooms) {
                     addDates(5, numRooms);
-                }
-                break;
-            default:
-                System.out.println("Wrong choice. Please try again");
-                break;
+                    break;
         }
 
     }
     public ArrayList<ArrayList<Integer>> getRoomNames() {
         return rooms;
     }
-    // static void makeRes(int sd, int sm, int sy, int ed, int em, int ey, int ch, int num){
-    //     ArrayList<Integer> initialRow = new ArrayList<>();
-    //     initialRow.add(sd);
-    //     initialRow.add(sm);
-    //     initialRow.add(sy);
-    //     initialRow.add(ed);
-    //     initialRow.add(em);
-    //     initialRow.add(ey);
-    //     initialRow.add(ch);
-    //     initialRow.add(num);
-    //     reservations.add(initialRow);
-    // }
     public void addDates(int index, int numRooms){
         int date = startDate;
         int mon = startMonth;
@@ -297,10 +260,25 @@ class Billings{
         totalPrice = beforeGst + gst;
         displayBill(g1.adults, g1.children);
         System.out.println();
-        System.out.println("Please choose the payment method:");
-        System.out.println("1.UPI/BHIM");
-        System.out.println("2. Credit/Debit/ATM Card");
-        int payChoice = sc.nextInt();
+        int payChoice = 0;
+        while (true) {
+            System.out.println("Please choose the payment method:");
+            System.out.println("1.UPI/BHIM");
+            System.out.println("2. Credit/Debit/ATM Card");
+
+            if (sc.hasNextInt()) {
+                payChoice = sc.nextInt();
+                if (payChoice == 1 || payChoice == 2) {
+                    break; 
+                } else {
+                    System.out.println("Invalid choice! Please enter 1 or 2.");
+                }
+            }
+            else {
+                System.out.println("Invalid input! Please enter a valid integer choice.");
+                sc.next();
+            }
+        }
         switch (payChoice) {
             case 1:
                 while (true) {   
@@ -324,14 +302,13 @@ class Billings{
                         while (true) {
                             try{
             
-                                System.out.println("Enter Debit/ Credit Number:");
-                                String debNo = sc.nextLine().trim();
+                                System.out.println("Enter Debit/ Credit Number (without space):");
+                                String debNo = sc.next();
                                 if (debNo.length() != 16) {
                                     System.out.println("card number invalid! please enter a 16 digit number:  ");
                                     continue;
                                 }
             
-                                sc.nextLine();
             
                                 
                                 System.out.println("Enter the Expiry Details (MM/YY):");
@@ -490,11 +467,26 @@ public class Hotel {
                 System.out.println("Invalid email address format! Please enter a valid email address.");
             }
         }
+
+        while (true) {
+            System.out.print("Enter your mobile number: +91 ");
+            String mno = sc.nextLine();
+
+            if (mno.length() == 10 && mno.matches("\\d+")) {
+                break;
+            } else {
+                System.out.println("Invalid number! Please enter a 10-digit number.");
+            }
+            
+        }
         
         while (true){
-            System.out.println("\t\t\t\t HOME \t\t\t\t");
-            System.out.println("Choose one of the given options:");
+            System.out.println("____________________________________HOME__________________________________________________");
+            System.out.println("Choose one of the given options (Enter any other number to exit):");
             System.out.println("(1) Check for rooms                   (2) Manage reservation(s)");
+            System.out.println("---------------------------------------------------------------------------");
+            System.out.println("Contact us:\tPhone number: +91 8555095546\tE-mail:nkolanu@gitam.in");
+            System.out.println("---------------------------------------------------------------------------");
             System.out.println("Choose your option: ");
             int mainChoice = sc.nextInt();
             String checkin;
@@ -547,6 +539,7 @@ public class Hotel {
                 int roomType = 0;
                 int num = 0;
                 if(resChoice==1){
+                    Guest guests = new Guest();
                     while (true) {
                         try {
                             
@@ -568,37 +561,69 @@ public class Hotel {
                                 System.out.println("Number of children must be greater than or equal to 0. Please enter again.");
                                 continue;
                             }
-            
+
+                            break;
+                        }
+                        catch(InputMismatchException e){
+                            System.out.println("Error: Invalid input. Please enter a valid integer.");
+                            sc.next(); // Consume the invalid input
+                        }
+                    }
+                    guests = new Guest(adults,children);
+
+                    while (true) {
+                        
+                        try{
                             System.out.println("Select the room type you wish to choose:");
                             System.out.println("\n1)Single Rooms\n2)Double Rooms\n3Luxury Rooms");
                             System.out.println("\nEnter your choice:");
                             roomType = sc.nextInt();
-
+    
                             if (roomType < 1 || roomType > 3) {
                                 System.out.println("Invalid room type. Please enter a valid option.");
                                 continue;
                             }
-            
-                            System.out.println("Enter the number of rooms you want to book:");
-                            num = sc.nextInt();
+                            while (true) {
+                                System.out.println("Enter the number of rooms you want to book:");
+                                num = sc.nextInt();
+                                
+                                if (num >= 0) {
+                                    break; // Exit the loop if the input is not negative
+                                } else {
+                                    System.out.println("Invalid input! Please enter a non-negative number of rooms.");
+                                }
+                            }
+
+        
+                                switch (roomType) {
+                                    case 1:
+                                        if (guests.points>10*num) {
+                                            System.out.println("no of people are more than room's capacity \n");
+                                            continue;
+                                        }
+                                    case 2:
+                                        if (guests.points>24*num) {
+                                            System.out.println("no of people are more than room's capacity\n");
+                                            continue;
+                                        }
+                                    case 3:
+                                        if (guests.points>28*num) {
+                                            System.out.println("no of people are more than room's capacity\n");
+                                            continue;
+                                        }
+                                }
+
                             
-
-                            if ((roomType == 1 && adults > 1) ||
-                            (roomType == 2 && adults + children > 3) ||
-                            (roomType == 3 && adults + children > 4)) {
-                            System.out.println("Error: Maximum occupancy exceeded for the selected room type.");
-                            continue;
-                        }
-
                             break;
             
                         } catch (InputMismatchException e) {
                             System.out.println("Error: Invalid input. Please enter a valid integer.");
                             sc.next(); // Consume the invalid input
                         }
-                  }
+                    }
+
+                  
                     
-                    Guest guests = new Guest(adults,children);
                     Reservation res1 = new Reservation(checkin,checkout,guests,roomType,num);
                     Billings b1 = new Billings(res1, guests);
                     Bookings.AddBooking(b1);
@@ -622,6 +647,9 @@ public class Hotel {
                         b1.CancelBooking(cancelNo-1);
                         System.out.println("The booking has been cancelled successfully.");
                     }
+                }
+                else{
+                    System.out.println("No reservations have been made.");
                 }
                 
             }
