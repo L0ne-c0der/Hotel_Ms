@@ -490,6 +490,18 @@ public class Hotel {
                 System.out.println("Invalid email address format! Please enter a valid email address.");
             }
         }
+
+        while (true) {
+            System.out.print("Enter your mobile number: +91 ");
+            String mno = sc.nextLine();
+
+            if (mno.length() == 10 && mno.matches("\\d+")) {
+                break;
+            } else {
+                System.out.println("Invalid number! Please enter a 10-digit number.");
+            }
+            
+        }
         
         while (true){
             System.out.println("\t\t\t\t HOME \t\t\t\t");
