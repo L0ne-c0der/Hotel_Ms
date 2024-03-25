@@ -302,14 +302,13 @@ class Billings{
                         while (true) {
                             try{
             
-                                System.out.println("Enter Debit/ Credit Number:");
-                                String debNo = sc.nextLine().trim();
+                                System.out.println("Enter Debit/ Credit Number (without space):");
+                                String debNo = sc.next();
                                 if (debNo.length() != 16) {
                                     System.out.println("card number invalid! please enter a 16 digit number:  ");
                                     continue;
                                 }
             
-                                sc.nextLine();
             
                                 
                                 System.out.println("Enter the Expiry Details (MM/YY):");
