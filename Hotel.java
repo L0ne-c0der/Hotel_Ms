@@ -203,18 +203,6 @@ class Reservation extends Dates{
     public ArrayList<ArrayList<Integer>> getRoomNames() {
         return rooms;
     }
-    // static void makeRes(int sd, int sm, int sy, int ed, int em, int ey, int ch, int num){
-    //     ArrayList<Integer> initialRow = new ArrayList<>();
-    //     initialRow.add(sd);
-    //     initialRow.add(sm);
-    //     initialRow.add(sy);
-    //     initialRow.add(ed);
-    //     initialRow.add(em);
-    //     initialRow.add(ey);
-    //     initialRow.add(ch);
-    //     initialRow.add(num);
-    //     reservations.add(initialRow);
-    // }
     public void addDates(int index, int numRooms){
         int date = startDate;
         int mon = startMonth;
@@ -493,10 +481,12 @@ public class Hotel {
         }
         
         while (true){
-            System.out.println("\t\t\t\t HOME \t\t\t\t");
-            System.out.println("Choose one of the given options:");
+            System.out.println("____________________________________HOME__________________________________________________");
+            System.out.println("Choose one of the given options (Enter any other number to exit):");
             System.out.println("(1) Check for rooms                   (2) Manage reservation(s)");
-            System.out.println("To contact us:\nPhone number: +91 8555095546\nE-mail:nkolanu@gitam.in");
+            System.out.println("---------------------------------------------------------------------------");
+            System.out.println("Contact us:\tPhone number: +91 8555095546\tE-mail:nkolanu@gitam.in");
+            System.out.println("---------------------------------------------------------------------------");
             System.out.println("Choose your option: ");
             int mainChoice = sc.nextInt();
             String checkin;
@@ -584,14 +574,6 @@ public class Hotel {
                             System.out.println("Enter the number of rooms you want to book:");
                             num = sc.nextInt();
                             
-
-                            if ((roomType == 1 && adults > 1) ||
-                            (roomType == 2 && adults + children > 3) ||
-                            (roomType == 3 && adults + children > 4)) {
-                            System.out.println("Error: Maximum occupancy exceeded for the selected room type.");
-                            continue;
-                        }
-
                             break;
             
                         } catch (InputMismatchException e) {
@@ -624,6 +606,9 @@ public class Hotel {
                         b1.CancelBooking(cancelNo-1);
                         System.out.println("The booking has been cancelled successfully.");
                     }
+                }
+                else{
+                    System.out.println("No reservations have been made.");
                 }
                 
             }
